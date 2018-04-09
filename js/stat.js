@@ -35,7 +35,7 @@ var getFinalColor = function (specific) {
 };
 
 window.renderStatistics = function (ctx, names, times) {
-  var drawCanvas = function (ctx) {
+  var drawCanvas = function () {
     ctx.fillStyle = 'white';
     ctx.shadowColor = 'rgba(0, 0, 0, 0.7)';
     ctx.shadowOffsetY = GAP;
@@ -59,7 +59,7 @@ window.renderStatistics = function (ctx, names, times) {
 
   var step = HISTOGRAM_HEIGHT / (getMaxElement(times) - 0);
 
-  drawCanvas(ctx);
+  drawCanvas();
 
   for (var i = 0; i < times.length; i++) {
     var barHeight = times[i] * step;
