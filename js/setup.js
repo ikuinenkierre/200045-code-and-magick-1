@@ -39,13 +39,19 @@ var WIZARD_EYES_COLORS = [
   'green'
 ];
 
-var getRandomInteger = function (min, max) {
-  return Math.floor(min + Math.random() * (max + 1 - min));
-};
-
 var wizards = [];
 
 var wizardsQuantity = 4;
+
+var userDialog = document.querySelector('.setup');
+var similarListElement = document.querySelector('.setup-similar-list');
+var similarWizardTemplate = document.querySelector('#similar-wizard-template').content.querySelector('.setup-similar-item');
+
+var fragment = document.createDocumentFragment();
+
+var getRandomInteger = function (min, max) {
+  return Math.floor(min + Math.random() * (max + 1 - min));
+};
 
 var generateWizardCharacter = function () {
   for (var i = 0; i < wizardsQuantity; i++) {
@@ -58,18 +64,9 @@ var generateWizardCharacter = function () {
   }
 };
 
-generateWizardCharacter();
-
-var userDialog = document.querySelector('.setup');
-
 var showSetupBlock = function () {
   userDialog.classList.remove('hidden');
 };
-
-showSetupBlock();
-
-var similarListElement = document.querySelector('.setup-similar-list');
-var similarWizardTemplate = document.querySelector('#similar-wizard-template').content.querySelector('.setup-similar-item');
 
 var renderWizard = function (wizard) {
   var wizardElement = similarWizardTemplate.cloneNode(true);
@@ -81,8 +78,6 @@ var renderWizard = function (wizard) {
   return wizardElement;
 };
 
-var fragment = document.createDocumentFragment();
-
 var generateTemplateInDocument = function () {
   for (var i = 0; i < wizards.length; i++) {
     fragment.appendChild(renderWizard(wizards[i]));
@@ -90,10 +85,15 @@ var generateTemplateInDocument = function () {
   return similarListElement.appendChild(fragment);
 };
 
-generateTemplateInDocument();
-
 var showSimilarCharactersBlock = function () {
   userDialog.querySelector('.setup-similar').classList.remove('hidden');
 };
 
-showSimilarCharactersBlock();
+var showSetupBlockWithGeneratedWizards = function () {
+  generateWizardCharacter();
+  showSetupBlock();
+  generateTemplateInDocument();
+  showSimilarCharactersBlock();
+};
+
+showSetupBlockWithGeneratedWizards();
